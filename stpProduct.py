@@ -21,11 +21,13 @@ def TcpClient(ip,port):
 
     while True:
         dataheader=client.recv(12)
+	heart=struct.pack('iid',4,100,0.0)
         if len(dataheader) >= 12:
             dataheader=struct.unpack('IIf',dataheader[:12])
             data=[str(dataheader[0]),str(dataheader[1]),str(dataheader[2])]
             print data
             if dataheader[1] == 0:
+		client.send(heart)
                 print 'alive'
 #                main(''.join(data))
             else:
@@ -35,5 +37,3 @@ def TcpClient(ip,port):
                 print data
 
 TcpClient('10.9.0.104',41900)
-  
-  
